@@ -22,7 +22,7 @@ const MembersAreaPage: React.FC = () => {
     try {
         window.google.accounts.id.initialize({
             // IMPORTANT: Replace with your actual Google Client ID from Google Cloud Console
-            client_id: 'YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com',
+            client_id: '1234567890-a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6.apps.googleusercontent.com',
             callback: handleCredentialResponse,
         });
 

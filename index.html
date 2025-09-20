@@ -12,6 +12,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <style>
+      html {
+        scroll-behavior: smooth;
+      }
       body {
         font-family: 'Poppins', sans-serif;
       }
@@ -305,6 +308,39 @@
           box-shadow: 0 0 50px rgba(252, 211, 77, 0.9), 0 0 80px rgba(251, 146, 60, 0.7);
           transform: scale(1.05);
         }
+      }
+
+      .orbiting-model-wrapper {
+        transform-style: preserve-3d;
+        margin-top: -20px;
+        margin-left: -20px;
+      }
+
+      .orbiting-model {
+        width: 40px;
+        height: 40px;
+        background: rgba(41, 51, 71, 0.7); /* dark:bg-slate-800/70 */
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        border: 1px solid rgba(251, 191, 36, 0.3);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #FBBF24; /* amber-400 */
+        transform: rotateZ(calc(-1 * var(--rz))) rotateY(calc(-1 * var(--ry)));
+        transition: transform 0.4s ease, box-shadow 0.4s ease;
+      }
+
+      .orbiting-model-wrapper:hover .orbiting-model {
+        transform: rotateZ(calc(-1 * var(--rz))) rotateY(calc(-1 * var(--ry))) scale(1.2);
+        box-shadow: 0 0 20px #FBBF24, 0 0 30px #FDE047;
+        cursor: pointer;
+      }
+
+      .orbiting-model svg {
+        width: 20px;
+        height: 20px;
       }
 
       /* Shimmer Placeholder */

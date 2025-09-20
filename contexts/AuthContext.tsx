@@ -1,7 +1,6 @@
 import React, { createContext, useState, useContext, ReactNode } from 'react';
 import type { User } from '../types';
 
-// FIX: Add a global type declaration for `window.google` to fix TypeScript errors.
 // This informs TypeScript that the `google` object from the Google Identity Services
 // script can exist on the `window` object.
 declare global {

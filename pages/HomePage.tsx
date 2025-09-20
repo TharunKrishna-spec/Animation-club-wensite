@@ -5,52 +5,88 @@ import useScrollAnimation from '../hooks/useScrollAnimation';
 import StatisticsSection from '../components/StatisticsSection';
 import ImageWithShimmer from '../components/ImageWithShimmer';
 
-const ThreeDShowcase: React.FC = () => {
+const CubeIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+    <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+    <line x1="12" y1="22.08" x2="12" y2="12"></line>
+  </svg>
+);
+
+const CameraIcon = () => (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+        <circle cx="12" cy="13" r="4"></circle>
+    </svg>
+);
+
+const PenToolIcon = () => (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
+        <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
+        <path d="M2 2l7.586 7.586"></path>
+        <circle cx="11" cy="11" r="2"></circle>
+    </svg>
+);
+
+const PlayIcon = () => (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <polygon points="5 3 19 12 5 21 5 3"></polygon>
+    </svg>
+);
+
+const ThreeDModelShowcase: React.FC = () => {
     const orbits = [
-      { size: '250px', duration: '20s', particles: 1, ry: '60deg', rz: '10deg' },
-      { size: '300px', duration: '25s', particles: 1, ry: '70deg', rz: '30deg' },
-      { size: '350px', duration: '30s', particles: 2, ry: '80deg', rz: '50deg' },
+      { size: '300px', duration: '30s', particles: [{ icon: <CubeIcon />, offset: 0 }] , ry: '60deg', rz: '10deg' },
+      { size: '420px', duration: '40s', particles: [{ icon: <CameraIcon />, offset: 0 }], ry: '70deg', rz: '30deg' },
+      { size: '540px', duration: '50s', particles: [{ icon: <PenToolIcon />, offset: 0 }, { icon: <PlayIcon />, offset: 0.5 }], ry: '80deg', rz: '50deg' },
+      { size: '660px', duration: '60s', particles: [{ icon: <CubeIcon />, offset: 0.25 }, { icon: <CameraIcon />, offset: 0.75 }], ry: '50deg', rz: '70deg' },
     ];
   
     return (
-      <div className="w-64 h-64 md:w-80 md:h-80 relative flex items-center justify-center perspective-1000">
-        <div 
-          className="w-24 h-24 rounded-full absolute"
-          style={{
-            background: 'radial-gradient(circle, #FDE047 0%, #FBBF24 40%, #F97316 100%)',
-            animation: 'pulse-glow-core 3s infinite ease-in-out',
-            transformStyle: 'preserve-3d',
-          }}
-        />
-        {orbits.map((orbit, i) => (
-          <div
-            key={i}
-            className="absolute rounded-full border-dashed border border-amber-300/20"
-            style={{
-              width: orbit.size,
-              height: orbit.size,
-              transform: `rotateY(${orbit.ry}) rotateZ(${orbit.rz})`,
-              transformStyle: 'preserve-3d',
-            }}
-          >
-            {Array.from({ length: orbit.particles }).map((_, p_i) => (
+      <div className="w-full h-[500px] flex items-center justify-center">
+        <div className="w-96 h-96 md:w-[500px] md:h-[500px] relative flex items-center justify-center perspective-1000">
+            <div 
+              className="w-32 h-32 rounded-full absolute"
+              style={{
+                background: 'radial-gradient(circle, #FDE047 0%, #FBBF24 40%, #F97316 100%)',
+                animation: 'pulse-glow-core 3s infinite ease-in-out',
+                transformStyle: 'preserve-3d',
+              }}
+            />
+            {orbits.map((orbit, i) => (
               <div
-                key={p_i}
-                className="absolute top-1/2 -mt-1.5 left-0 -ml-1.5 w-3 h-3 rounded-full bg-amber-200"
-                style={
-                  {
-                    '--ry': orbit.ry,
-                    '--rz': orbit.rz,
-                    '--tx': `calc(${parseInt(orbit.size) / 2}px)`,
-                    animation: `orbit ${orbit.duration} linear infinite`,
-                    animationDelay: `-${(p_i * (parseInt(orbit.duration) / orbit.particles))}s`,
-                    boxShadow: '0 0 10px #FDE047',
-                  } as React.CSSProperties
-                }
-              ></div>
+                key={i}
+                className="absolute rounded-full border-dashed border border-amber-300/20"
+                style={{
+                  width: orbit.size,
+                  height: orbit.size,
+                  transform: `rotateY(${orbit.ry}) rotateZ(${orbit.rz})`,
+                  transformStyle: 'preserve-3d',
+                }}
+              >
+                {orbit.particles.map((particle, p_i) => (
+                  <div
+                    key={p_i}
+                    className="orbiting-model-wrapper absolute top-1/2 left-0"
+                    style={
+                      {
+                        '--ry': orbit.ry,
+                        '--rz': orbit.rz,
+                        '--tx': `calc(${parseInt(orbit.size) / 2}px)`,
+                        animation: `orbit ${orbit.duration} linear infinite`,
+                        animationDelay: `-${particle.offset * parseInt(orbit.duration)}s`,
+                      } as React.CSSProperties
+                    }
+                  >
+                    <div className="orbiting-model">
+                        {particle.icon}
+                    </div>
+                  </div>
+                ))}
+              </div>
             ))}
-          </div>
-        ))}
+        </div>
       </div>
     );
 };
@@ -61,6 +97,7 @@ const HomePage: React.FC = () => {
 
   const { ref: heroRef } = useScrollAnimation<HTMLDivElement>();
   const { ref: aboutRef } = useScrollAnimation<HTMLElement>();
+  const { ref: showcaseRef } = useScrollAnimation<HTMLElement>();
   const { ref: deptsRef } = useScrollAnimation<HTMLElement>();
   const { ref: eventsRef } = useScrollAnimation<HTMLElement>();
   const { ref: leadsRef } = useScrollAnimation<HTMLElement>();
@@ -100,8 +137,8 @@ const HomePage: React.FC = () => {
             transform: `translateY(${offsetY * 0.8}px)`,
           }}
         />
-        <div ref={heroRef} className="scroll-animate zoom-in container mx-auto px-6 text-center z-10 grid md:grid-cols-2 items-center gap-8">
-            <div className="flex flex-col items-center md:items-start text-center md:text-left">
+        <div ref={heroRef} className="scroll-animate zoom-in container mx-auto px-6 text-center z-10 flex items-center justify-center min-h-screen">
+            <div className="flex flex-col items-center">
                 <h1 className="text-5xl md:text-7xl font-orbitron font-extrabold uppercase tracking-widest animate-glow">
                     Animation Club <span className="text-amber-300">VITC</span>
                 </h1>
@@ -109,9 +146,6 @@ const HomePage: React.FC = () => {
                  <Link to="/departments" className="btn-shimmer mt-8 bg-amber-400 text-gray-900 font-bold py-3 px-8 rounded-full hover:bg-amber-300 transition-all duration-300 transform hover:scale-105 active:scale-100 shadow-[0_0_20px_rgba(251,191,36,0.6)]">
                     Explore Our World
                 </Link>
-            </div>
-            <div className="flex justify-center items-center">
-               <ThreeDShowcase />
             </div>
         </div>
       </section>
@@ -137,6 +171,17 @@ const HomePage: React.FC = () => {
 
       {/* Statistics Section */}
       <StatisticsSection />
+
+      {/* 3D Showcase Section */}
+      <section ref={showcaseRef} className="scroll-animate zoom-in py-16 md:py-20 bg-gray-100 dark:bg-transparent">
+        <div className="container mx-auto px-6 text-center">
+          <h2 className="text-4xl font-bold font-orbitron mb-4 dark:text-white text-gray-900">Creations in Motion</h2>
+          <p className="max-w-3xl mx-auto text-lg text-gray-600 dark:text-gray-400 mb-8">
+            Explore a universe of creativity where ideas take form. Our showcase represents the fusion of art and technology, with each orbiting element symbolizing a project brought to life by our talented members.
+          </p>
+          <ThreeDModelShowcase />
+        </div>
+      </section>
 
        {/* Departments Preview */}
       <section ref={deptsRef} className="scroll-animate slide-up py-16 md:py-20 bg-gray-200 dark:bg-gray-900/50">

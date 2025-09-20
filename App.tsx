@@ -62,7 +62,6 @@ const App: React.FC = () => {
       if (isMusicPlaying) {
         audioRef.current.pause();
       } else {
-        // FIX: Corrected a typo from `audio-ref` to `audioRef` to resolve compilation errors.
         audioRef.current.play().catch(error => console.error("Audio play failed:", error));
       }
       setIsMusicPlaying(!isMusicPlaying);
