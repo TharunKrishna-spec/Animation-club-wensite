@@ -167,7 +167,7 @@ const EventsPage: React.FC = () => {
 
 
   return (
-    <div className="pt-24 pb-16 md:pb-20 bg-gray-100 dark:bg-transparent min-h-screen">
+    <div className="pt-24 pb-16 md:pb-20 bg-gray-100 dark:bg-transparent min-h-screen overflow-x-hidden">
       <div className="container mx-auto px-6">
         <div ref={titleRef} className="scroll-animate zoom-in text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-extrabold font-orbitron text-gray-900 dark:text-white">Club Events</h1>
@@ -181,28 +181,30 @@ const EventsPage: React.FC = () => {
             {/* Past Events Section */}
             <section ref={pastEventsRef} className="scroll-animate slide-up mb-20">
               <h2 className="text-4xl font-bold font-orbitron mb-8 dark:text-white text-gray-900">Past Events</h2>
-              <div className="flex space-x-8 overflow-x-auto pb-6" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-                {pastEvents.map(event => (
-                  <div
-                    key={event.id}
-                    className="group flex-shrink-0 w-80 perspective-1000 cursor-pointer"
-                    onClick={() => setSelectedEvent(event)}
-                  >
-                    <div className="relative w-full h-96 rounded-lg shadow-xl overflow-hidden transform-style-3d transition-all duration-500 group-hover:rotate-y-3 group-hover:scale-105 active:scale-100 group-hover:shadow-2xl group-hover:shadow-amber-400/40">
-                      <ImageWithShimmer
-                        src={event.images[0]}
-                        alt={event.title}
-                        className="absolute inset-0 w-full h-full object-cover"
-                        wrapperClassName="w-full h-full"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-                      <div className="absolute bottom-0 left-0 p-6">
-                        <h3 className="text-2xl font-bold text-white">{event.title}</h3>
-                        <p className="text-gray-300 line-clamp-2">{event.description}</p>
+              <div className="marquee-container -mx-6">
+                <div className="marquee-track flex gap-8 py-4">
+                  {[...pastEvents, ...pastEvents].map((event, index) => (
+                    <div
+                      key={`${event.id}-${index}`}
+                      className="group flex-shrink-0 w-80 perspective-1000 cursor-pointer"
+                      onClick={() => setSelectedEvent(event)}
+                    >
+                      <div className="relative w-full h-96 rounded-lg shadow-xl overflow-hidden transform-style-3d transition-all duration-500 group-hover:rotate-y-3 group-hover:scale-105 active:scale-100 group-hover:shadow-2xl group-hover:shadow-amber-400/40">
+                        <ImageWithShimmer
+                          src={event.images[0]}
+                          alt={event.title}
+                          className="absolute inset-0 w-full h-full object-cover"
+                          wrapperClassName="w-full h-full"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                        <div className="absolute bottom-0 left-0 p-6">
+                          <h3 className="text-2xl font-bold text-white">{event.title}</h3>
+                          <p className="text-gray-300 line-clamp-2">{event.description}</p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </section>
 
@@ -254,18 +256,6 @@ const EventsPage: React.FC = () => {
             display: -webkit-box;
             -webkit-box-orient: vertical;
             -webkit-line-clamp: 2;
-          }
-          /* Simple scrollbar styling for webkit browsers */
-          .overflow-x-auto::-webkit-scrollbar {
-            height: 8px;
-          }
-          .overflow-x-auto::-webkit-scrollbar-track {
-            background: transparent;
-          }
-          .overflow-x-auto::-webkit-scrollbar-thumb {
-            background-color: rgba(251, 191, 36, 0.5);
-            border-radius: 20px;
-            border: 3px solid transparent;
           }
         `}</style>
     </div>

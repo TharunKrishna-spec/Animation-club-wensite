@@ -61,7 +61,7 @@ const LeadCard: React.FC<LeadCardProps> = ({ lead, delay, onClick, animationType
     return (
         <div 
             ref={ref}
-            className={`group scroll-animate ${animationType} text-center cursor-pointer transition-transform active:scale-95`} 
+            className={`group scroll-animate ${animationType} lead-card text-center cursor-pointer transition-transform active:scale-95`} 
             style={{ transitionDelay: `${delay}ms` }}
             onClick={onClick}
         >
@@ -69,10 +69,10 @@ const LeadCard: React.FC<LeadCardProps> = ({ lead, delay, onClick, animationType
                 <ImageWithShimmer
                   src={lead.imageUrl}
                   alt={lead.name}
-                  className="w-48 h-48 rounded-full object-cover mx-auto grayscale group-hover:grayscale-0 transition-all duration-500 transform group-hover:scale-110"
+                  className="w-48 h-48 rounded-full object-cover mx-auto"
                   wrapperClassName="w-48 h-48 rounded-full"
                 />
-                <div className="absolute inset-0 rounded-full border-4 border-transparent group-hover:border-amber-400 transition-all duration-500 group-hover:shadow-[0_0_20px_rgba(251,191,36,0.7)]"></div>
+                <div className="border-overlay absolute inset-0 rounded-full border-4 border-transparent"></div>
             </div>
             <h3 className="mt-4 text-xl font-bold text-gray-900 dark:text-white">{lead.name}</h3>
             <p className="text-amber-400 dark:text-amber-300">{lead.role}</p>

@@ -58,21 +58,13 @@ const DepartmentDetailPage: React.FC = () => {
   const [department, setDepartment] = useState<Department | null>(null);
   const [loading, setLoading] = useState(true);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [offsetY, setOffsetY] = useState(0);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [touchStart, setTouchStart] = useState<number | null>(null);
-
+  const [parallaxOffset, setParallaxOffset] = useState(0);
 
   const { ref: aboutRef } = useScrollAnimation<HTMLDivElement>();
   const { ref: teamRef } = useScrollAnimation<HTMLDivElement>();
   const { ref: projectsRef } = useScrollAnimation<HTMLDivElement>();
-
-  const handleScroll = () => setOffsetY(window.pageYOffset);
-
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   useEffect(() => {
     // Simulate API call
@@ -85,6 +77,14 @@ const DepartmentDetailPage: React.FC = () => {
 
     return () => clearTimeout(timer);
   }, [id]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setParallaxOffset(window.pageYOffset);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const totalSlides = department?.teamPhotos?.length || 0;
 
@@ -144,10 +144,10 @@ const DepartmentDetailPage: React.FC = () => {
         ) : (
           <>
             <div
-              className="absolute inset-0 bg-cover bg-center"
+              className="absolute inset-0 bg-cover bg-center transition-transform duration-100 ease-out"
               style={{
                 backgroundImage: `url(${department.bannerImage})`,
-                transform: `scale(${1 + offsetY * 0.0003}) translateY(${offsetY * 0.4}px)`,
+                transform: `translateY(${parallaxOffset * 0.4}px)`,
               }}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
@@ -158,7 +158,12 @@ const DepartmentDetailPage: React.FC = () => {
             {!department ? (
               <div className="h-14 w-3/4 max-w-lg rounded-md shimmer-placeholder" />
             ) : (
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white font-orbitron drop-shadow-lg">{department.name}</h1>
+              <h1 
+                className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white font-orbitron drop-shadow-lg transition-transform duration-100 ease-out"
+                style={{ transform: `translateY(-${parallaxOffset * 0.2}px)` }}
+              >
+                {department.name}
+              </h1>
             )}
           </div>
         </div>

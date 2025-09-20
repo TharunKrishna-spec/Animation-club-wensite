@@ -71,8 +71,9 @@ const App: React.FC = () => {
   return (
     <div className="bg-gray-100 dark:bg-gray-900 dark:live-background text-gray-800 dark:text-gray-200 min-h-screen transition-colors duration-500">
       {theme === 'dark' && <StarfieldBackground />}
-      {theme === 'dark' && <AnimatedParticles count={50} />}
+      {theme === 'dark' && <AnimatedParticles count={30} />}
       {theme === 'dark' && <InteractiveBackground />}
+      
       <Header />
       
       <main>

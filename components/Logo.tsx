@@ -17,10 +17,22 @@ const Logo: React.FC = () => (
     </defs>
     <circle cx="12" cy="12" r="11.5" stroke="rgba(255,255,255,0.2)" strokeWidth="1" />
     <circle cx="12" cy="12" r="10" fill="url(#logo-gradient)" />
-    <path
-      d="M9.5 16.5L16.5 12L9.5 7.5V16.5Z"
-      fill="white"
-    />
+    <g>
+      <path
+        d="M8.5 16.5L15.5 12L8.5 7.5V16.5Z"
+        fill="white"
+        fillOpacity="0.4"
+      />
+      <path
+        d="M9.5 16.5L16.5 12L9.5 7.5V16.5Z"
+        fill="white"
+        fillOpacity="0.7"
+      />
+      <path
+        d="M10.5 16.5L17.5 12L10.5 7.5V16.5Z"
+        fill="white"
+      />
+    </g>
   </svg>
 );
 
