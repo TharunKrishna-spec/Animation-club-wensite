@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Animation Club VITC</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%23FDE047'/%3E%3Cstop offset='100%25' stop-color='%23FBBF24'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='50' cy='50' r='50' fill='url(%23g)'/%3E%3Cpath d='M40 70 L70 50 L40 30 Z' fill='white'/%3E%3C/svg%3E">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%23FDE047'/%3E%3Cstop offset='100%25' stop-color='%23FBBF24'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='50' cy='50' r='50' fill='url(%23g)'/%3E%3Cpath d='M40 70 L70 50 L40 30 Z' fill='white'/%3E%3C/svg%3E">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <style>
+      body {
+        font-family: 'Poppins', sans-serif;
+      }
+      .font-orbitron {
+        font-family: 'Orbitron', sans-serif;
+      }
+      @keyframes animateGradient {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+
+      .dark .live-background {
+        background: linear-gradient(315deg, 
+          #0f172a 0%, 
+          rgba(76, 29, 149, 0.6) 25%, 
+          rgba(126, 34, 206, 0.5) 50%, 
+          rgba(20, 83, 121, 0.7) 75%, 
+          #0f172a 100%
+        );
+        background-size: 250% 250%;
+        animation: animateGradient 15s ease infinite;
+      }
+      
+      /* Interactive Background */
+      #interactive-background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        background: 
+          radial-gradient(600px circle at var(--x) var(--y), rgba(251, 191, 36, 0.2), transparent 40%),
+          radial-gradient(800px circle at var(--x) var(--y), rgba(126, 34, 206, 0.15), transparent 50%),
+          radial-gradient(1200px circle at var(--x) var(--y), rgba(20, 83, 121, 0.15), transparent 60%);
+        transition: background 0.1s ease-out;
+      }
+
+      /* Starfield Background */
+      .starfield-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: -2; /* Behind particles and interactive bg */
+        overflow: hidden;
+      }
+
+      #stars1, #stars2, #stars3 {
+        position: absolute;
+        border-radius: 50%;
+        background: transparent;
+      }
+
+      #stars1 {
+        width: 1px;
+        height: 1px;
+        animation: animStar 50s linear infinite;
+        box-shadow: 1919px 1256px #FFF, 1294px 1735px #FFF, 1858px 949px #FFF, 1534px 1063px #FFF, 1279px 633px #FFF, 243px 134px #FFF, 1373px 1935px #FFF, 1319px 129px #FFF, 1073px 1933px #FFF, 1829px 1868px #FFF, 1269px 921px #FFF, 1014px 1819px #FFF, 1421px 1152px #FFF, 28px 1239px #FFF, 532px 1001px #FFF, 1813px 1485px #FFF, 915px 1869px #FFF, 1295px 1475px #FFF, 1278px 1227px #FFF, 114px 1906px #FFF, 1374px 1357px #FFF, 506px 1738px #FFF, 1265px 1993px #FFF, 807px 1194px #FFF, 1017px 1860px #FFF, 1419px 956px #FFF, 1139px 1833px #FFF, 1381px 177px #FFF, 1305px 1563px #FFF, 1326px 1904px #FFF, 608px 57px #FFF, 1492px 174px #FFF, 1386px 815px #FFF, 786px 1430px #FFF, 1183px 1303px #FFF, 122px 1470px #FFF, 574px 193px #FFF, 1969px 101px #FFF, 1913px 1813px #FFF, 1141px 1934px #FFF, 1349px 1003px #FFF, 1339px 109px #FFF, 126px 1334px #FFF, 1139px 1085px #FFF, 1230px 100px #FFF, 1230px 107px #FFF, 423px 1801px #FFF, 34px 1066px #FFF, 1756px 33px #FFF, 32px 1083px #FFF, 1500px 32px #FFF, 1599px 728px #FFF, 290px 1544px #FFF, 1494px 1475px #FFF, 1300px 528px #FFF, 483px 259px #FFF, 1024px 119px #FFF, 1282px 55px #FFF, 1039px 1335px #FFF, 169px 748px #FFF, 1399px 304px #FFF, 1342px 78px #FFF, 768px 1090px #FFF, 95px 1918px #FFF, 1721px 1248px #FFF, 381px 139px #FFF, 1193px 832px #FFF, 155px 1149px #FFF, 611px 484px #FFF;
+      }
+
+      #stars2 {
+        width: 2px;
+        height: 2px;
+        animation: animStar 100s linear infinite;
+        box-shadow: 1876px 1237px #FFF, 1237px 1656px #FFF, 779px 103px #FFF, 1007px 1109px #FFF, 154px 1515px #FFF, 1547px 1503px #FFF, 1302px 36px #FFF, 1111px 1318px #FFF, 1106px 1758px #FFF, 522px 730px #FFF, 582px 1709px #FFF, 1404px 1284px #FFF, 186px 1483px #FFF, 1904px 134px #FFF, 132px 1381px #FFF, 1184px 1731px #FFF, 1075px 1700px #FFF, 1445px 1043px #FFF, 959px 194px #FFF, 1506px 1139px #FFF, 370px 1414px #FFF, 483px 1133px #FFF, 198px 105px #FFF, 539px 1250px #FFF, 1032px 1110px #FFF;
+      }
+
+      #stars3 {
+        width: 3px;
+        height: 3px;
+        animation: animStar 150s linear infinite;
+        box-shadow: 1285px 1547px #FFF, 115px 512px #FFF, 1205px 1943px #FFF, 1135px 986px #FFF, 1832px 1100px #FFF, 1532px 1404px #FFF, 219px 1204px #FFF, 1268px 38px #FFF, 1754px 1716px #FFF, 1459px 586px #FFF;
+      }
+      
+      @keyframes animStar {
+        from { transform: translateY(0px); }
+        to { transform: translateY(-2000px); }
+      }
+
+      /* Particle Animation */
+      .particle-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      .particle {
+        position: absolute;
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 50%;
+        opacity: 0;
+        animation: drift var(--duration) var(--delay) linear infinite;
+        width: var(--size);
+        height: var(--size);
+        box-shadow: 0 0 7px rgba(255, 255, 255, 0.8), 0 0 12px rgba(109, 40, 217, 0.5), 0 0 15px rgba(20, 83, 121, 0.4);
+      }
+
+      @keyframes drift {
+        0% {
+          transform: translateX(var(--x)) translateY(var(--y)) scale(0);
+          opacity: 0;
+        }
+        10% {
+          opacity: 0.8;
+        }
+        90% {
+          opacity: 0.8;
+        }
+        100% {
+          transform: translateX(calc(var(--x) + 20vw)) translateY(calc(var(--y) - 20vh)) scale(1);
+          opacity: 0;
+        }
+      }
+      
+      /* Scroll Animations */
+      .scroll-animate {
+        opacity: 0;
+        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+      }
+      .scroll-animate.slide-up { transform: translateY(50px); }
+      .scroll-animate.slide-left { transform: translateX(-50px); }
+      .scroll-animate.slide-right { transform: translateX(50px); }
+      .scroll-animate.zoom-in { transform: scale(0.9); }
+
+      .scroll-animate.is-visible {
+        opacity: 1;
+        transform: none;
+      }
+      
+      /* Card Hover Effects */
+      .perspective-1000 { perspective: 1000px; }
+      .card-3d-hover {
+        transform-style: preserve-3d;
+        transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+      }
+      .group:hover .card-3d-hover {
+        transform: translateZ(20px) rotateX(10deg) rotateY(-5deg);
+        box-shadow: 0px 30px 40px -20px rgba(252, 211, 77, 0.3);
+      }
+      
+      /* Button Shimmer Effect */
+      .btn-shimmer {
+        position: relative;
+        overflow: hidden;
+      }
+      .btn-shimmer::after {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.2) 50%, transparent 100%);
+        transform: rotate(20deg);
+        opacity: 0;
+        transition: opacity 0.4s ease, transform 0.4s ease;
+      }
+      .btn-shimmer:hover::after {
+        opacity: 1;
+        transform: translateX(25%) rotate(20deg);
+      }
+
+      /* Stat Section Styles */
+      .stat-card {
+        position: relative;
+        overflow: visible; /* Allow tooltip to show */
+        border: 1px solid rgba(251, 191, 36, 0.2);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .stat-card:hover {
+          transform: translateY(-10px);
+          box-shadow: 0 20px 30px rgba(0,0,0,0.2);
+      }
+
+      .stat-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: 1rem; /* match card's border-radius */
+        padding: 2px;
+        background: radial-gradient(400px at 50% 110%, rgba(251, 191, 36, 0.5), transparent 70%);
+        -webkit-mask: 
+           linear-gradient(#fff 0 0) content-box, 
+           linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+                mask-composite: exclude;
+        opacity: 0;
+        transition: opacity 0.4s ease-in-out;
+        pointer-events: none;
+      }
+
+      .stat-card:hover::before {
+        opacity: 1;
+      }
+
+      /* Tooltip styles for stats */
+      .stat-card .stat-tooltip {
+        opacity: 0;
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%) translateY(10px);
+        margin-bottom: 10px;
+        background-color: #1F2937; /* dark:bg-gray-800 */
+        color: #D1D5DB; /* dark:text-gray-300 */
+        padding: 8px 12px;
+        border-radius: 6px;
+        font-size: 0.875rem;
+        white-space: nowrap;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        pointer-events: none;
+      }
+
+      .stat-card:hover .stat-tooltip {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+        pointer-events: auto;
+      }
+
+      /* Icon Pop Animation */
+      @keyframes icon-pop-pulse {
+        0% { transform: scale(0.8); opacity: 0; }
+        60% { transform: scale(1.1); opacity: 1; }
+        80% { transform: scale(0.95); }
+        100% { transform: scale(1); opacity: 1; }
+      }
+      .animate-icon-pop {
+        animation: icon-pop-pulse 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+      }
+      
+      /* Google Button Hover Glow */
+      .google-btn-container {
+        position: relative;
+        display: inline-block; /* Wraps the google button tightly */
+        border-radius: 9999px; /* Ensures hover area is pill-shaped */
+      }
+
+      .google-btn-container::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: inherit; /* Inherits the pill shape */
+        opacity: 1; /* Make glow visible by default */
+        transition: opacity 0.3s ease-in-out;
+        z-index: -1;
+        pointer-events: none;
+        /* Apply subtle pulse animation by default */
+        animation: pulse-glow 2.5s infinite ease-in-out; 
+      }
+
+      .google-btn-container:hover::after {
+        /* On hover, make the pulse slightly faster */
+        animation: pulse-glow 1.5s infinite ease-in-out;
+      }
+
+      @keyframes pulse-glow {
+        0%, 100% {
+          box-shadow: 0 0 15px rgba(252, 211, 77, 0.6);
+        }
+        50% {
+          box-shadow: 0 0 25px rgba(252, 211, 77, 0.9);
+        }
+      }
+
+      /* 3D Showcase Animations */
+      @keyframes orbit {
+        0% { transform: rotateZ(var(--rz)) rotateY(var(--ry)) translateX(var(--tx)) rotateY(calc(-1 * var(--ry))) rotateZ(calc(-1 * var(--rz))); }
+        100% { transform: rotateZ(var(--rz)) rotateY(calc(360deg + var(--ry))) translateX(var(--tx)) rotateY(calc(-360deg - var(--ry))) rotateZ(calc(-1 * var(--rz))); }
+      }
+      @keyframes pulse-glow-core {
+        0%, 100% {
+          box-shadow: 0 0 40px rgba(252, 211, 77, 0.7), 0 0 60px rgba(251, 146, 60, 0.5);
+          transform: scale(1);
+        }
+        50% {
+          box-shadow: 0 0 50px rgba(252, 211, 77, 0.9), 0 0 80px rgba(251, 146, 60, 0.7);
+          transform: scale(1.05);
+        }
+      }
+
+      /* Shimmer Placeholder */
+      @keyframes shimmer {
+        0% { background-position: -1000px 0; }
+        100% { background-position: 1000px 0; }
+      }
+
+      .dark .shimmer-placeholder {
+        background: #1f2937; /* dark:bg-gray-800 */
+        background-image: linear-gradient(to right, #1f2937 0%, #374151 20%, #1f2937 40%, #1f2937 100%);
+        background-repeat: no-repeat;
+        background-size: 2000px 100%;
+        animation: shimmer 2.5s linear infinite;
+      }
+      html:not(.dark) .shimmer-placeholder {
+        background: #e5e7eb; /* bg-gray-200 */
+        background-image: linear-gradient(to right, #e5e7eb 0%, #f9fafb 20%, #e5e7eb 40%, #e5e7eb 100%);
+        background-repeat: no-repeat;
+        background-size: 2000px 100%;
+        animation: shimmer 2.5s linear infinite;
+      }
+      
+      /* App Loader Animation */
+      #app-loader {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        background-color: #111827; /* bg-gray-900 */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transition: opacity 0.5s ease-out;
+        opacity: 1;
+      }
+
+      #app-loader.loader-hidden {
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .loader-svg { transform-origin: center; }
+      
+      .loader-circle {
+        stroke-dasharray: 283; /* 2 * PI * 45 */
+        stroke-dashoffset: 283;
+        animation: draw-circle 2s ease-in-out forwards;
+      }
+
+      .loader-play {
+        opacity: 0;
+        transform-origin: center;
+        transform: scale(0.5);
+        animation: pop-in 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) 1.5s forwards;
+      }
+
+      .loader-text {
+        margin-top: 20px;
+        font-family: 'Poppins', sans-serif;
+        color: #9ca3af; /* text-gray-400 */
+        letter-spacing: 0.1em;
+        opacity: 0;
+        animation: fade-in-text 1s ease 0.5s forwards;
+      }
+
+      @keyframes draw-circle {
+        to { stroke-dashoffset: 0; }
+      }
+      @keyframes pop-in {
+        to { opacity: 1; transform: scale(1); }
+      }
+      @keyframes fade-in-text {
+        to { opacity: 1; }
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react-router-dom": "https://aistudiocdn.com/react-router-dom@^7.9.1",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.1.1/",
+    "react/": "https://aistudiocdn.com/react@^19.1.1/",
+    "react": "https://aistudiocdn.com/react@^19.1.1"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root">
+      <div id="app-loader">
+        <svg class="loader-svg" width="100" height="100" viewBox="0 0 100 100">
+          <defs>
+            <linearGradient id="g-loader" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#FDE047"></stop>
+              <stop offset="100%" stop-color="#FBBF24"></stop>
+            </linearGradient>
+          </defs>
+          <circle cx="50" cy="50" r="45" fill="none" stroke="url(#g-loader)" stroke-width="4" stroke-linecap="round" class="loader-circle"></circle>
+          <path class="loader-play" d="M40 70 L70 50 L40 30 Z" fill="white"></path>
+        </svg>
+        <div class="loader-text">Initializing Creative Engine...</div>
+      </div>
+    </div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
